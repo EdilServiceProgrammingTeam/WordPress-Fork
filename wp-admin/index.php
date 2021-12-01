@@ -138,7 +138,7 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 ?>
 
 <div class="wrap">
-	<h1><?php echo esc_html( $title ); ?></h1>
+	<h1><?php echo esc_html( $title ); ?> - Fork</h1>
 
 	<?php
 	if ( ! empty( $_GET['admin_email_remind_later'] ) ) :

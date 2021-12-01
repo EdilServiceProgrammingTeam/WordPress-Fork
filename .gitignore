@@ -1,2 +1,4 @@
 /wp-config.php
 /.htaccess
+/.idea/
+/wp-content/languages/

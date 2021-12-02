@@ -10,4 +10,4 @@
 /** Load WordPress Administration Bootstrap */
 require_once __DIR__ . '/admin.php';
 
-require ABSPATH . 'wp-admin/update-core.php';
+//require ABSPATH . 'wp-admin/update-core.php';

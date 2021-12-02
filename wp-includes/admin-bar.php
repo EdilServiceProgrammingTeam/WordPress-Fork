@@ -1083,13 +1083,13 @@ function wp_admin_bar_updates_menu( $wp_admin_bar ) {
 	$title  = '<span class="ab-label" aria-hidden="true">' . number_format_i18n( $update_data['counts']['total'] ) . '</span>';
 	$title .= '<span class="screen-reader-text updates-available-text">' . $updates_text . '</span>';
 
-	$wp_admin_bar->add_node(
-		array(
-			'id'    => 'updates',
-			'title' => $icon . $title,
-			'href'  => network_admin_url( 'update-core.php' ),
-		)
-	);
+//	$wp_admin_bar->add_node(
+//		array(
+//			'id'    => 'updates',
+//			'title' => $icon . $title,
+//			'href'  => network_admin_url( 'update-core.php' ),
+//		)
+//	);
 }
 
 /**

@@ -33,31 +33,31 @@ if ( ! is_multisite() || current_user_can( 'update_core' ) ) {
 	$update_data = wp_get_update_data();
 }
 
-if ( ! is_multisite() ) {
-	if ( current_user_can( 'update_core' ) ) {
-		$cap = 'update_core';
-	} elseif ( current_user_can( 'update_plugins' ) ) {
-		$cap = 'update_plugins';
-	} elseif ( current_user_can( 'update_themes' ) ) {
-		$cap = 'update_themes';
-	} else {
-		$cap = 'update_languages';
-	}
-	$submenu['index.php'][10] = array(
-		sprintf(
-			/* translators: %s: Number of pending updates. */
-			__( 'Updates %s' ),
-			sprintf(
-				'<span class="update-plugins count-%s"><span class="update-count">%s</span></span>',
-				$update_data['counts']['total'],
-				number_format_i18n( $update_data['counts']['total'] )
-			)
-		),
-		$cap,
-		'update-core.php',
-	);
-	unset( $cap );
-}
+//if ( ! is_multisite() ) {
+//	if ( current_user_can( 'update_core' ) ) {
+//		$cap = 'update_core';
+//	} elseif ( current_user_can( 'update_plugins' ) ) {
+//		$cap = 'update_plugins';
+//	} elseif ( current_user_can( 'update_themes' ) ) {
+//		$cap = 'update_themes';
+//	} else {
+//		$cap = 'update_languages';
+//	}
+//	$submenu['index.php'][10] = array(
+//		sprintf(
+//			/* translators: %s: Number of pending updates. */
+//			__( 'U1pdates %s' ),
+//			sprintf(
+//				'<span class="update-plugins count-%s"><span class="update-count">%s</span></span>',
+//				$update_data['counts']['total'],
+//				number_format_i18n( $update_data['counts']['total'] )
+//			)
+//		),
+//		$cap,
+//		'update-core.php',
+//	);
+//	unset( $cap );
+//}
 
 $menu[4] = array( '', 'read', 'separator1', '', 'wp-menu-separator' );
 

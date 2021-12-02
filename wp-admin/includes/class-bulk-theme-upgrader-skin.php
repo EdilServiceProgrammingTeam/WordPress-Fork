@@ -50,11 +50,11 @@ class Bulk_Theme_Upgrader_Skin extends Bulk_Upgrader_Skin {
 				self_admin_url( 'themes.php' ),
 				__( 'Go to Themes page' )
 			),
-			'updates_page' => sprintf(
-				'<a href="%s" target="_parent">%s</a>',
-				self_admin_url( 'update-core.php' ),
-				__( 'Go to WordPress Updates page' )
-			),
+//			'updates_page' => sprintf(
+//				'<a href="%s" target="_parent">%s</a>',
+//				self_admin_url( 'update-core.php' ),
+//				__( 'Go to WordPress Updates page' )
+//			),
 		);
 
 		if ( ! current_user_can( 'switch_themes' ) && ! current_user_can( 'edit_theme_options' ) ) {

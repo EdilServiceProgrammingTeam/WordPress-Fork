@@ -76,7 +76,7 @@ switch ( $action ) {
 		$error_msg = false;
 
 		// For output of the Quick Draft dashboard widget.
-		require_once ABSPATH . 'wp-admin/includes/dashboard.php';
+		//require_once ABSPATH . 'wp-admin/includes/dashboard.php';
 
 		if ( ! wp_verify_nonce( $nonce, 'add-post' ) ) {
 			$error_msg = __( 'Unable to submit this form, please refresh and try again.' );
@@ -105,7 +105,7 @@ switch ( $action ) {
 		}
 
 		edit_post();
-		wp_dashboard_quick_press();
+		//wp_dashboard_quick_press();
 		exit;
 
 	case 'postajaxpost':

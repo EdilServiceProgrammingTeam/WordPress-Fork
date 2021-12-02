@@ -23,23 +23,23 @@ if ( current_user_can( 'update_core' ) ) {
 }
 
 $update_data = wp_get_update_data();
-if ( $update_data['counts']['total'] ) {
-	$submenu['index.php'][10] = array(
-		sprintf(
-			/* translators: %s: Number of available updates. */
-			__( 'Updates %s' ),
-			sprintf(
-				'<span class="update-plugins count-%s"><span class="update-count">%s</span></span>',
-				$update_data['counts']['total'],
-				number_format_i18n( $update_data['counts']['total'] )
-			)
-		),
-		$cap,
-		'update-core.php',
-	);
-} else {
-	$submenu['index.php'][10] = array( __( 'Updates' ), $cap, 'update-core.php' );
-}
+//if ( $update_data['counts']['total'] ) {
+//	$submenu['index.php'][10] = array(
+//		sprintf(
+//			/* translators: %s: Number of available updates. */
+//			__( 'Updates %s' ),
+//			sprintf(
+//				'<span class="update-plugins count-%s"><span class="update-count">%s</span></span>',
+//				$update_data['counts']['total'],
+//				number_format_i18n( $update_data['counts']['total'] )
+//			)
+//		),
+//		$cap,
+//		'update-core.php',
+//	);
+//} else {
+//	$submenu['index.php'][10] = array( __( 'Updates' ), $cap, 'update-core.php' );
+//}
 
 unset( $cap );
 

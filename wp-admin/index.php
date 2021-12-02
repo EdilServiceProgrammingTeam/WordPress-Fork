@@ -10,9 +10,9 @@
 require_once __DIR__ . '/admin.php';
 
 /** Load WordPress dashboard API */
-require_once ABSPATH . 'wp-admin/includes/dashboard.php';
+/**require_once ABSPATH . 'wp-admin/includes/dashboard.php';*/
 
-wp_dashboard_setup();
+//wp_dashboard_setup();
 
 wp_enqueue_script( 'dashboard' );
 
@@ -89,7 +89,7 @@ if ( current_user_can( 'edit_posts' ) ) {
 $help .= '<p>' . __( '<strong>Activity</strong> &mdash; Shows the upcoming scheduled posts, recently published posts, and the most recent comments on your posts and allows you to moderate them.' ) . '</p>';
 
 if ( is_blog_admin() && current_user_can( 'edit_posts' ) ) {
-	$help .= '<p>' . __( "<strong>Quick Draft</strong> &mdash; Allows you to create a new post and save it as a draft. Also displays links to the 3 most recent draft posts you've started." ) . '</p>';
+	$help .= '<p>' . __( "<strong>Quick Draft1</strong> &mdash; Allows you to create a new post and save it as a draft. Also displays links to the 3 most recent draft posts you've started." ) . '</p>';
 }
 
 $help .= '<p>' . sprintf(
@@ -200,7 +200,7 @@ if ( has_action( 'welcome_panel' ) && current_user_can( 'edit_theme_options' ) )
 <?php endif; ?>
 
 	<div id="dashboard-widgets-wrap">
-	<?php wp_dashboard(); ?>
+	<?php //wp_dashboard(); ?>
 	</div><!-- dashboard-widgets-wrap -->
 
 </div><!-- wrap -->

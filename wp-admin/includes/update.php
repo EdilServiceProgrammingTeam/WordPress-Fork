@@ -249,22 +249,19 @@ function core_update_footer( $msg = '' ) {
 
 	$is_development_version = preg_match( '/alpha|beta|RC/', $wp_version );
 
-	if ( $is_development_version ) {
-		return sprintf(
-			/* translators: 1: WordPress version number, 2: URL to WordPress Updates screen. */
-			__( 'You are using a development version (%1$s). Cool! Please <a href="%2$s">stay updated</a>.' ),
-			get_bloginfo( 'version', 'display' ),
-			network_admin_url( 'update-core.php' )
-		);
-	}
+//	if ( $is_development_version ) {
+//		return sprintf(
+//			/* translators: 1: WordPress version number, 2: URL to WordPress Updates screen. */
+//			__( 'You are using a development version (%1$s). Cool! Please <a href="%2$s">stay updated</a>.' ),
+//			get_bloginfo( 'version', 'display' ),
+//			network_admin_url( 'update-core.php' )
+//		);
+//	}
 
 	switch ( $cur->response ) {
 		case 'upgrade':
 			return sprintf(
-				'<strong><a href="%s">%s</a></strong>',
-				network_admin_url( 'update-core.php' ),
-				/* translators: %s: WordPress version. */
-				sprintf( __( 'Get Version %s' ), $cur->current )
+				'<strong><a href="">DISABILITATO</a></strong>'
 			);
 
 		case 'latest':
@@ -303,23 +300,23 @@ function update_nag() {
 		sanitize_title( $cur->current )
 	);
 
-	if ( current_user_can( 'update_core' ) ) {
-		$msg = sprintf(
-			/* translators: 1: URL to WordPress release notes, 2: New WordPress version, 3: URL to network admin, 4: Accessibility text. */
-			__( '<a href="%1$s">WordPress %2$s</a> is available! <a href="%3$s" aria-label="%4$s">Please update now</a>.' ),
-			$version_url,
-			$cur->current,
-			network_admin_url( 'update-core.php' ),
-			esc_attr__( 'Please update WordPress now' )
-		);
-	} else {
-		$msg = sprintf(
-			/* translators: 1: URL to WordPress release notes, 2: New WordPress version. */
-			__( '<a href="%1$s">WordPress %2$s</a> is available! Please notify the site administrator.' ),
-			$version_url,
-			$cur->current
-		);
-	}
+//	if ( current_user_can( 'update_core' ) ) {
+//		$msg = sprintf(
+//			/* translators: 1: URL to WordPress release notes, 2: New WordPress version, 3: URL to network admin, 4: Accessibility text. */
+//			__( '<a href="%1$s">WordPress %2$s</a> is available! <a href="%3$s" aria-label="%4$s">Please update now</a>.' ),
+//			$version_url,
+//			$cur->current,
+//			network_admin_url( 'update-core.php' ),
+//			esc_attr__( 'Please update WordPress now' )
+//		);
+//	} else {
+//		$msg = sprintf(
+//			/* translators: 1: URL to WordPress release notes, 2: New WordPress version. */
+//			__( '<a href="%1$s">WordPress %2$s</a> is available! Please notify the site administrator.' ),
+//			$version_url,
+//			$cur->current
+//		);
+//	}
 
 	echo "<div class='update-nag notice notice-warning inline'>$msg</div>";
 }
@@ -340,14 +337,14 @@ function update_right_now_message() {
 	if ( current_user_can( 'update_core' ) ) {
 		$cur = get_preferred_from_update_core();
 
-		if ( isset( $cur->response ) && 'upgrade' === $cur->response ) {
-			$msg .= sprintf(
-				'<a href="%s" class="button" aria-describedby="wp-version">%s</a> ',
-				network_admin_url( 'update-core.php' ),
-				/* translators: %s: WordPress version number, or 'Latest' string. */
-				sprintf( __( 'Update to %s' ), $cur->current ? $cur->current : __( 'Latest' ) )
-			);
-		}
+//		if ( isset( $cur->response ) && 'upgrade' === $cur->response ) {
+//			$msg .= sprintf(
+//				'<a href="%s" class="button" aria-describedby="wp-version">%s</a> ',
+//				network_admin_url( 'update-core.php' ),
+//				/* translators: %s: WordPress version number, or 'Latest' string. */
+//				sprintf( __( 'Update to %s' ), $cur->current ? $cur->current : __( 'Latest' ) )
+//			);
+//		}
 	}
 
 	/* translators: 1: Version number, 2: Theme name. */
@@ -725,41 +722,41 @@ function wp_theme_update_row( $theme_key, $theme ) {
 				__( 'There is a new version of %s available, but it doesn&#8217;t work with your versions of WordPress and PHP.' ),
 				$theme['Name']
 			);
-			if ( current_user_can( 'update_core' ) && current_user_can( 'update_php' ) ) {
-				printf(
-					/* translators: 1: URL to WordPress Updates screen, 2: URL to Update PHP page. */
-					' ' . __( '<a href="%1$s">Please update WordPress</a>, and then <a href="%2$s">learn more about updating PHP</a>.' ),
-					self_admin_url( 'update-core.php' ),
-					esc_url( wp_get_update_php_url() )
-				);
-				wp_update_php_annotation( '</p><p><em>', '</em>' );
-			} elseif ( current_user_can( 'update_core' ) ) {
-				printf(
-					/* translators: %s: URL to WordPress Updates screen. */
-					' ' . __( '<a href="%s">Please update WordPress</a>.' ),
-					self_admin_url( 'update-core.php' )
-				);
-			} elseif ( current_user_can( 'update_php' ) ) {
-				printf(
-					/* translators: %s: URL to Update PHP page. */
-					' ' . __( '<a href="%s">Learn more about updating PHP</a>.' ),
-					esc_url( wp_get_update_php_url() )
-				);
-				wp_update_php_annotation( '</p><p><em>', '</em>' );
-			}
+//			if ( current_user_can( 'update_core' ) && current_user_can( 'update_php' ) ) {
+//				printf(
+//					/* translators: 1: URL to WordPress Updates screen, 2: URL to Update PHP page. */
+//					' ' . __( '<a href="%1$s">Please update WordPress</a>, and then <a href="%2$s">learn more about updating PHP</a>.' ),
+//					self_admin_url( 'update-core.php' ),
+//					esc_url( wp_get_update_php_url() )
+//				);
+//				wp_update_php_annotation( '</p><p><em>', '</em>' );
+//			} elseif ( current_user_can( 'update_core' ) ) {
+//				printf(
+//					/* translators: %s: URL to WordPress Updates screen. */
+//					' ' . __( '<a href="%s">Please update WordPress</a>.' ),
+//					self_admin_url( 'update-core.php' )
+//				);
+//			} elseif ( current_user_can( 'update_php' ) ) {
+//				printf(
+//					/* translators: %s: URL to Update PHP page. */
+//					' ' . __( '<a href="%s">Learn more about updating PHP</a>.' ),
+//					esc_url( wp_get_update_php_url() )
+//				);
+//				wp_update_php_annotation( '</p><p><em>', '</em>' );
+//			}
 		} elseif ( ! $compatible_wp ) {
 			printf(
 				/* translators: %s: Theme name. */
 				__( 'There is a new version of %s available, but it doesn&#8217;t work with your version of WordPress.' ),
 				$theme['Name']
 			);
-			if ( current_user_can( 'update_core' ) ) {
-				printf(
-					/* translators: %s: URL to WordPress Updates screen. */
-					' ' . __( '<a href="%s">Please update WordPress</a>.' ),
-					self_admin_url( 'update-core.php' )
-				);
-			}
+//			if ( current_user_can( 'update_core' ) ) {
+//				printf(
+//					/* translators: %s: URL to WordPress Updates screen. */
+//					' ' . __( '<a href="%s">Please update WordPress</a>.' ),
+//					self_admin_url( 'update-core.php' )
+//				);
+//			}
 		} elseif ( ! $compatible_php ) {
 			printf(
 				/* translators: %s: Theme name. */
@@ -833,15 +830,15 @@ function maintenance_nag() {
 		return false;
 	}
 
-	if ( current_user_can( 'update_core' ) ) {
-		$msg = sprintf(
-			/* translators: %s: URL to WordPress Updates screen. */
-			__( 'An automated WordPress update has failed to complete - <a href="%s">please attempt the update again now</a>.' ),
-			'update-core.php'
-		);
-	} else {
-		$msg = __( 'An automated WordPress update has failed to complete! Please notify the site administrator.' );
-	}
+//	if ( current_user_can( 'update_core' ) ) {
+//		$msg = sprintf(
+//			/* translators: %s: URL to WordPress Updates screen. */
+//			__( 'An automated WordPress update has failed to complete - <a href="%s">please attempt the update again now</a>.' ),
+//			'update-core.php'
+//		);
+//	} else {
+//		$msg = __( 'An automated WordPress update has failed to complete! Please notify the site administrator.' );
+//	}
 
 	echo "<div class='update-nag notice notice-warning inline'>$msg</div>";
 }

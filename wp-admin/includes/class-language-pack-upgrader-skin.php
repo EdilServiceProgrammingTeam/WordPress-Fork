@@ -74,11 +74,11 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 		$this->decrement_update_count( 'translation' );
 
 		$update_actions = array(
-			'updates_page' => sprintf(
-				'<a href="%s" target="_parent">%s</a>',
-				self_admin_url( 'update-core.php' ),
-				__( 'Go to WordPress Updates page' )
-			),
+//			'updates_page' => sprintf(
+//				'<a href="%s" target="_parent">%s</a>',
+//				self_admin_url( 'update-core.php' ),
+//				__( 'Go to WordPress Updates page' )
+//			),
 		);
 
 		/**

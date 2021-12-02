@@ -11,7 +11,7 @@
 require_once __DIR__ . '/admin.php';
 
 /** Load WordPress dashboard API */
-require_once ABSPATH . 'wp-admin/includes/dashboard.php';
+//require_once ABSPATH . 'wp-admin/includes/dashboard.php';
 
 if ( ! current_user_can( 'manage_network' ) ) {
 	wp_die( __( 'Sorry, you are not allowed to access this page.' ), 403 );
@@ -57,7 +57,7 @@ get_current_screen()->set_help_sidebar(
 	'<p>' . __( '<a href="https://wordpress.org/support/forum/multisite/">Support Forums</a>' ) . '</p>'
 );
 
-wp_dashboard_setup();
+//wp_dashboard_setup();
 
 wp_enqueue_script( 'dashboard' );
 wp_enqueue_script( 'plugin-install' );
@@ -72,7 +72,7 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 
 <div id="dashboard-widgets-wrap">
 
-<?php wp_dashboard(); ?>
+<?php //wp_dashboard(); ?>
 
 <div class="clear"></div>
 </div><!-- dashboard-widgets-wrap -->

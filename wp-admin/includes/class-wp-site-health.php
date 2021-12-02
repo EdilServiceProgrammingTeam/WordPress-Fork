@@ -288,9 +288,7 @@ class WP_Site_Health {
 			);
 
 			$result['actions'] = sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( admin_url( 'update-core.php?force-check=1' ) ),
-				__( 'Check for updates manually' )
+				'<a href="">DISABILITATO</a>'
 			);
 		} else {
 			foreach ( $core_updates as $core => $update ) {
@@ -308,9 +306,7 @@ class WP_Site_Health {
 					);
 
 					$result['actions'] = sprintf(
-						'<a href="%s">%s</a>',
-						esc_url( admin_url( 'update-core.php' ) ),
-						__( 'Install the latest version of WordPress' )
+						'<a href="">DISABILITATO</a>'
 					);
 
 					if ( $current_major !== $new_major ) {

@@ -758,7 +758,7 @@ class WP_Automatic_Updater {
 					/* translators: %s: WordPress latest version. */
 					$body .= "\n\n" . sprintf( __( 'WordPress %s is also now available.' ), $next_user_core_update->current ) . ' ';
 					$body .= __( 'Updating is easy and only takes a few moments:' );
-					$body .= "\n" . network_admin_url( 'update-core.php' );
+//					$body .= "\n" . network_admin_url( 'update-core.php' );
 				}
 
 				break;
@@ -781,7 +781,7 @@ class WP_Automatic_Updater {
 				}
 
 				$body .= __( 'Updating is easy and only takes a few moments:' );
-				$body .= "\n" . network_admin_url( 'update-core.php' );
+//				$body .= "\n" . network_admin_url( 'update-core.php' );
 				break;
 
 			case 'critical':
@@ -804,7 +804,7 @@ class WP_Automatic_Updater {
 				$body .= "\n\n" . __( "This means your site may be offline or broken. Don't panic; this can be fixed." );
 
 				$body .= "\n\n" . __( "Please check out your site now. It's possible that everything is working. If it says you need to update, you should do so:" );
-				$body .= "\n" . network_admin_url( 'update-core.php' );
+//				$body .= "\n" . network_admin_url( 'update-core.php' );
 				break;
 		}
 

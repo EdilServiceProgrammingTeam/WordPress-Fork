@@ -115,6 +115,7 @@ final class WooCommerce {
 	 * @var array of WC_Deprecated_Hooks
 	 */
 	public $deprecated_hook_handlers = array();
+	private mixed $shipping;
 
 	/**
 	 * Main WooCommerce Instance.

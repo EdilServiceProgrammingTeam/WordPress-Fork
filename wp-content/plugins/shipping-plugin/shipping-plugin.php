@@ -149,6 +149,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						'cost' => $cost
 					);
 					$this->add_rate($rate);
+					$this->add_rate(array(
+						'id'=>'ritiro-in-sede',
+						'label' => 'Ritiro in sede (gratis)',
+						'cost'=>0
+					));
 				}
 			}
 		}
@@ -162,14 +167,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	add_filter('woocommerce_shipping_methods', 'add_new_shipping_method');
 	function validate_order($posted)
 	{
-		$packages = WC()->shipping->get_packages();
-		$country = $packages[0]["destination"]["country"];
-
-		$message ='ciao';
-		$messageType = "error";
-		if (!wc_has_notice($message, $messageType)) {
-			wc_add_notice($message, $messageType);
+		$country = WC()->shipping->get_packages();
+		if ($country!='IT') {
+			$message ='ciao';
+			$messageType = "error";
+			if (!wc_has_notice($message, $messageType)) {
+				wc_add_notice($message, $messageType);
+			}
 		}
+
+
 	}
 	add_action('woocommerce_review_order_before_cart_contents', 'validate_order', 10);
 	add_action('woocommerce_after_checkout_validation', 'validate_order', 10);

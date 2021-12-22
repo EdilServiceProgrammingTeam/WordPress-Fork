@@ -175,7 +175,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	add_filter('woocommerce_shipping_methods', 'add_new_shipping_method');
 	function validate_order($posted)
 	{
-		$country = WC()->shipping->get_packages()["destination"]["country"];
+		$country = WC()->shipping->get_packages()[0]["destination"]["country"];
 		if ($country!='IT') {
 			$message ='ciao';
 			$messageType = "error";

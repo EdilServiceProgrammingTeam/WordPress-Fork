@@ -34,15 +34,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					$this->form_fields = array(
 						'enabled' => array(
-							'title' => __('Enable', 'cloudways'),
+							'title' => __('Enable'),
 							'type' => 'checkbox',
 							'default' => 'yes'
 						),
 						'title' => array(
-							'title' => __('Title', 'cloudways'),
+							'title' => __('Title'),
 							'type' => 'text',
-							'default' => __('Standard (iva esclusa)', 'cloudways')
+							'default' => __('Standard (iva esclusa)')
 						),
+						'enable-takeaway' => array(
+							'title' =>
+						)
 					);
 				}
 
@@ -129,6 +132,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 					if ($shipping_class_heavy) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
+						if ($total_without_discount>200) {
+
+						}
 					}
 					elseif ($shipping_class_medium) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'medium');
@@ -167,7 +173,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	add_filter('woocommerce_shipping_methods', 'add_new_shipping_method');
 	function validate_order($posted)
 	{
-		$country = WC()->shipping->get_packages();
+		$country = WC()->shipping->get_packages()["destination"]["country"];
 		if ($country!='IT') {
 			$message ='ciao';
 			$messageType = "error";

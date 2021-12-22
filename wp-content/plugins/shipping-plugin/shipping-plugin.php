@@ -44,7 +44,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => __('Standard (iva esclusa)')
 						),
 						'enable-takeaway' => array(
-							'title' =>
+							'title' => __('Enable takeaway'),
+							'type' => 'checkbox',
+							'default' =>'yes'
 						)
 					);
 				}

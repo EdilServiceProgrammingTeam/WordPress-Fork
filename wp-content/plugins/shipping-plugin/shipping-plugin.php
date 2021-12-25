@@ -15,11 +15,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				public function __construct()
 				{
 					$this->id = 'standard-shipping';
-					$this->method_title = __('Standard (iva esclusa)', 'cloudways');
-					$this->method_description = __('Standard (iva esclusa)', 'cloudways');
+					$this->method_title = __('Standard (tax excluded)', 'easyweb');
+					$this->method_description = __('The standard method for shipping', 'easyweb');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
-					$this->title = $this->settings['title'] ?? __( 'Standard (iva esclusa)', 'cloudways' );
+					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easyweb' );
 				}
 				/**
 				Load the settings API
@@ -34,19 +34,29 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					$this->form_fields = array(
 						'enabled' => array(
-							'title' => __('Enable'),
+							'title' => __('Enable','easyweb'),
 							'type' => 'checkbox',
 							'default' => 'yes'
 						),
 						'title' => array(
 							'title' => __('Title'),
 							'type' => 'text',
-							'default' => __('Standard (iva esclusa)')
+							'default' => __('Standard (tax excluded)','easyweb')
 						),
 						'enable-takeaway' => array(
 							'title' => __('Enable takeaway'),
 							'type' => 'checkbox',
 							'default' =>'yes'
+						),
+						'takeaway-cost' => array(
+							'title' => __('Takeaway cost (default set to 0','easyweb'),
+							'type'=>'text',
+							'default' =>'0'
+						),
+						'minimum-cost'=> array(
+							'title'=>__('Minimum Cost (default set to 0)','easyweb'),
+							'type'=>'text',
+							'default'
 						)
 					);
 				}
@@ -114,24 +124,23 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							if ($shipping_class) {
 								switch($shipping_class) {
 									case 'light':
-										array_push($shipping_class_light,$regular_price);
+										$shipping_class_light[] = $regular_price;
 										break;
 									case 'medium':
-										array_push($shipping_class_medium,$regular_price);
+										$shipping_class_medium[] = $regular_price;
 										break;
 									case 'heavy':
-										array_push($shipping_class_heavy,$regular_price);
+										$shipping_class_heavy[] = $regular_price;
 										break;
 								}
 							}
 							else {
-								array_push($shipping_class_medium,$regular_price);
+								$shipping_class_medium[] = $regular_price;
 								break;
 							}
 						}
 
 					}
-
 					if ($shipping_class_heavy) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
 						if ($total_without_discount>200) {
@@ -157,11 +166,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						'cost' => $cost
 					);
 					$this->add_rate($rate);
-					$this->add_rate(array(
-						'id'=>'ritiro-in-sede',
-						'label' => 'Ritiro in sede (gratis)',
-						'cost'=>0
-					));
+					if ($this->settings['enable-takeaway']) {
+						$this->add_rate(array(
+							'id'=>'take-away',
+							'label' => __('Take away','easyweb'),
+							'cost'=>0
+						));
+					}
 				}
 			}
 		}

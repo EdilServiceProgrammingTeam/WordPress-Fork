@@ -59,9 +59,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default'=>'0'
 						),
 						'take-away-info'=> array(
-							'title'=>__('Take away info Cost (default set to \'\')','easydigital'),
+							'title'=>__('Take away info Cost (default set to "")','easydigital'),
 							'type'=>'text',
 							'default'=>''
+						),
+						'cost-per-kilo'=> array(
+							'title'=>__('Cost per Kilo (default set to 0.4)','easydigital'),
+							'type'=>'text',
+							'default'=>'0.4'
 						)
 					);
 				}
@@ -122,7 +127,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						$total_without_discount+=$regular_price;
 						if ($_product->get_weight() && !$_product->get_shipping_class()) {
 							$weight = $_product->get_weight() * $values['quantity'];
-							$cost+= $weight *0.4; //very important variable (0.4)
+							$cost+= $weight*floatval($this->settings['cost-per-kilo']);
 						}
 						else {
 							$shipping_class=$_product->get_shipping_class();
@@ -162,8 +167,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$zoneFromCountry = $countryZones[$country];
 					$priceFromZone = $zonePrices[$zoneFromCountry];
 					$cost += $priceFromZone;
-					if ($cost<8) {
-						$cost=8;
+					if ($cost<$this->settings['minimum-cost']) {
+						$cost=$this->settings['minimum-cost'];
 					}
 					$rate = array(
 						'id' => $this->id,

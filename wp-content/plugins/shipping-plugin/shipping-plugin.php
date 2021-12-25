@@ -67,6 +67,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'title'=>__('Cost per Kilo (default set to 0.4)','easydigital'),
 							'type'=>'text',
 							'default'=>'0.4'
+						),
+						'multiplier-quantity'=> array(
+							'title'=>__('Multiplier per quantity (default set to 0.2)','easydigital'),
+							'description'=>__('Increments the shipping cost based on the total quantity of the
+							 products in cart after €200 is reached if the products are not lightweight.<br>
+							 final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','easydigital'),
+							'type'=>'text',
+							'default'=>'0.4'
 						)
 					);
 				}
@@ -92,6 +100,17 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					else {
 						$cost=$shipping_costs[6];
+					}
+					return $cost;
+				}
+
+				function apply_multiplier_per_quantity($cost,$package,$total_without_discount) {
+					if ($total_without_discount>200) {
+						$total_quantity=0;
+						foreach ($package['contents'] as $item_id => $values) {
+							$total_quantity+=$values['quantity'];
+						}
+						$cost+=1+$total_quantity*floatval($this->settings['multiplier-quantity']);
 					}
 					return $cost;
 				}
@@ -147,12 +166,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					if ($shipping_class_heavy) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
-						if ($total_without_discount>200) {
-							$total_quantity= WC()->cart->get_cart_contents_count();
-						}
+						$cost=$this->apply_multiplier_per_quantity( $cost, $package, $total_without_discount );
 					}
 					elseif ($shipping_class_medium) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'medium');
+						$cost=$this->apply_multiplier_per_quantity( $cost, $package, $total_without_discount );
 					}
 					elseif ($shipping_class_light) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
@@ -162,7 +180,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' => $this->title.WC()->cart->get_cart_contents_count(),
+						'label' => $this->title,
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {

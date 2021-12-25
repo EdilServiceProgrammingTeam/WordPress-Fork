@@ -178,7 +178,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',
-							'label' => __( 'Take away ' . $this->settings['enable-takeaway'] . '<span class="take-away-info">'
+							'label' => __( 'Take away ' . '<span class="take-away-info">'
 							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
 							'cost'  => intval( $this->settings['take-away-cost'] )
 						) );
@@ -197,8 +197,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	function validate_order($posted)
 	{
 		$country = WC()->session->get('customer')['shipping_country'];
-		if ($country!='IT') {
-			$message =__('Country not available, contact us for more information about shipping.','easydigital');
+		$allowed_countries = WC()->countries->get_allowed_countries();
+		if (in_array($country,$allowed_countries)) {
+			$message =__('The country you selected is not available, contact us for more information about shipping.','easydigital');
 			$messageType = "error";
 			if (!wc_has_notice($message, $messageType)) {
 				wc_add_notice($message, $messageType);

@@ -154,7 +154,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($shipping_class_heavy) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
 						if ($total_without_discount>200) {
-
+							$total_quantity= WC()->cart->get_cart_contents_count();
 						}
 					}
 					elseif ($shipping_class_medium) {
@@ -178,7 +178,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',
-							'label' => __( 'Take away ' . '<span class="take-away-info">'
+							'label' => __( 'Take away ' .WC()->cart->get_cart_contents_count(). '<span class="take-away-info">'
 							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
 							'cost'  => intval( $this->settings['take-away-cost'] )
 						) );

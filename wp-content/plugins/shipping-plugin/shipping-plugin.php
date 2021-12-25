@@ -176,7 +176,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						'cost' => $cost
 					);
 					$this->add_rate($rate);
-					if ($this->settings['enable-takeaway']) {
+					if ($this->settings['enable-takeaway']=='yes') {
 						$this->add_rate(array(
 							'id'=>'take-away',
 							'label' => __('Take away '.'<span class="take-away-info">'

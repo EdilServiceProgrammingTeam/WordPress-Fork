@@ -109,12 +109,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 				public function calculate_shipping($package = array())
 				{
-					$countryZones = array(
-						'IT' => 1
-					);
-					$zonePrices = array(
-						1 => 0
-					);
 					$cost = 0;
 					$total_without_discount = 0;
 					$shipping_class_light = [];
@@ -163,10 +157,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					elseif ($shipping_class_light) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
-
-					$zoneFromCountry = $countryZones[$country];
-					$priceFromZone = $zonePrices[$zoneFromCountry];
-					$cost += $priceFromZone;
 					if ($cost<$this->settings['minimum-cost']) {
 						$cost=$this->settings['minimum-cost'];
 					}
@@ -178,7 +168,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',
-							'label' => __( 'Take away ' .WC()->cart->get_cart_contents_count(). '<span class="take-away-info">'
+							'label' => __( 'Take away ' . '<span class="take-away-info">'
 							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
 							'cost'  => intval( $this->settings['take-away-cost'] )
 						) );

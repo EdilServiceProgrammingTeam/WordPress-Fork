@@ -162,13 +162,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' => $this->title,
+						'label' => $this->title.WC()->cart->get_cart_contents_count(),
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',
-							'label' => __( 'Take away ' .'ciao '.WC()->cart->get_cart_contents_count(). '<span class="take-away-info">'
+							'label' => __( 'Take away ' . '<span class="take-away-info">'
 							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
 							'cost'  => intval( $this->settings['take-away-cost'] )
 						) );

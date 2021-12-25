@@ -15,11 +15,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				public function __construct()
 				{
 					$this->id = 'standard-shipping';
-					$this->method_title = __('Standard (tax excluded)', 'easyweb');
-					$this->method_description = __('The standard method for shipping', 'easyweb');
+					$this->method_title = __('Standard (tax excluded)', 'easydigital');
+					$this->method_description = __('The standard method for shipping', 'easydigital');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
-					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easyweb' );
+					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easydigital' );
 				}
 				/**
 				Load the settings API
@@ -34,29 +34,34 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					$this->form_fields = array(
 						'enabled' => array(
-							'title' => __('Enable','easyweb'),
+							'title' => __('Enable','easydigital'),
 							'type' => 'checkbox',
 							'default' => 'yes'
 						),
 						'title' => array(
 							'title' => __('Title'),
 							'type' => 'text',
-							'default' => __('Standard (tax excluded)','easyweb')
+							'default' => __('Standard (tax excluded)','easydigital')
 						),
 						'enable-takeaway' => array(
 							'title' => __('Enable takeaway'),
 							'type' => 'checkbox',
 							'default' =>'yes'
 						),
-						'takeaway-cost' => array(
-							'title' => __('Takeaway cost (default set to 0','easyweb'),
+						'take-away-cost' => array(
+							'title' => __('Takeaway cost (default set to 0','easydigital'),
 							'type'=>'text',
 							'default' =>'0'
 						),
 						'minimum-cost'=> array(
-							'title'=>__('Minimum Cost (default set to 0)','easyweb'),
+							'title'=>__('Minimum Cost (default set to 0)','easydigital'),
 							'type'=>'text',
 							'default'=>'0'
+						),
+						'take-away-info'=> array(
+							'title'=>__('Take away info Cost (default set to \'\')','easydigital'),
+							'type'=>'text',
+							'default'=>''
 						)
 					);
 				}
@@ -169,8 +174,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($this->settings['enable-takeaway']) {
 						$this->add_rate(array(
 							'id'=>'take-away',
-							'label' => __('Take away','easyweb'),
-							'cost'=>0
+							'label' => __('Take away '.'<span class="take-away-info">'
+							              .$this->settings['take-away-info'].'</span>','easydigital'),
+							'cost'=>intval($this->settings['take-away-cost'])
 						));
 					}
 				}
@@ -188,7 +194,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	{
 		$country = WC()->session->get('customer')['shipping_country'];
 		if ($country!='IT') {
-			$message ='ciao';
+			$message =__('Country not available, contact us for more information about shipping.','easydigital');
 			$messageType = "error";
 			if (!wc_has_notice($message, $messageType)) {
 				wc_add_notice($message, $messageType);

@@ -74,7 +74,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							 products in cart after €200 is reached if the products are not lightweight.<br>
 							 final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','easydigital'),
 							'type'=>'text',
-							'default'=>'0.4'
+							'default'=>'0.2'
 						)
 					);
 				}

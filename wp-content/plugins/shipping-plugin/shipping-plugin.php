@@ -23,57 +23,57 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					The three shipping classes estimate the products shipping cost based on total price ranges.
 					That\'s dedicated to the products which don\'t have the weight property.<br>
 					Here you can the ranges:
-					<table style="border: 1px solid;">
+					<table class="bordered-table">
 					<thead>
 					  <tr>
-					    <th class="tg-c3ow">Range</th>
-					    <th class="tg-c3ow">Light</th>
-					    <th class="tg-c3ow">Medium</th>
-					    <th class="tg-c3ow">Heavy</th>
+					    <th class="bordered-table">Range</th>
+					    <th class="bordered-table">Light</th>
+					    <th class="bordered-table">Medium</th>
+					    <th class="bordered-table">Heavy</th>
 					  </tr>
 					</thead>
 					<tbody>
 					  <tr>
-					    <td class="tg-c3ow">€0-25</td>
-					    <td class="tg-c3ow">€8</td>
-					    <td class="tg-c3ow">€10</td>
-					    <td class="tg-c3ow">€16</td>
+					    <td class="bordered-table">€0-25</td>
+					    <td class="bordered-table">€8</td>
+					    <td class="bordered-table">€10</td>
+					    <td class="bordered-table">€16</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€25-45</td>
-					    <td class="tg-c3ow">€9</td>
-					    <td class="tg-c3ow">€12</td>
-					    <td class="tg-c3ow">€18</td>
+					    <td class="bordered-table">€25-45</td>
+					    <td class="bordered-table">€9</td>
+					    <td class="bordered-table">€12</td>
+					    <td class="bordered-table">€18</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€45-100</td>
-					    <td class="tg-c3ow">€10</td>
-					    <td class="tg-c3ow">€15</td>
-					    <td class="tg-c3ow">€20</td>
+					    <td class="bordered-table">€45-100</td>
+					    <td class="bordered-table">€10</td>
+					    <td class="bordered-table">€15</td>
+					    <td class="bordered-table">€20</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€100-200</td>
-					    <td class="tg-c3ow">€100-200</td>
-					    <td class="tg-c3ow">€17</td>
-					    <td class="tg-c3ow">€27</td>
+					    <td class="bordered-table">€100-200</td>
+					    <td class="bordered-table">€100-200</td>
+					    <td class="bordered-table">€17</td>
+					    <td class="bordered-table">€27</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€200-500</td>
-					    <td class="tg-c3ow">€200-500</td>
-					    <td class="tg-c3ow">€25</td>
-					    <td class="tg-c3ow">€35</td>
+					    <td class="bordered-table">€200-500</td>
+					    <td class="bordered-table">€200-500</td>
+					    <td class="bordered-table">€25</td>
+					    <td class="bordered-table">€35</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€500-1000</td>
-					    <td class="tg-c3ow">€500-1000</td>
-					    <td class="tg-c3ow">€25</td>
-					    <td class="tg-c3ow">€45</td>
+					    <td class="bordered-table">€500-1000</td>
+					    <td class="bordered-table">€500-1000</td>
+					    <td class="bordered-table">€25</td>
+					    <td class="bordered-table">€45</td>
 					  </tr>
 					  <tr>
-					    <td class="tg-c3ow">€1000+</td>
-					    <td class="tg-c3ow">€35</td>
-					    <td class="tg-c3ow">€45</td>
-					    <td class="tg-c3ow">€70</td>
+					    <td class="bordered-table">€1000+</td>
+					    <td class="bordered-table">€35</td>
+					    <td class="bordered-table">€45</td>
+					    <td class="bordered-table">€70</td>
 					  </tr>
 					</tbody>
 					</table>', 'easydigital');

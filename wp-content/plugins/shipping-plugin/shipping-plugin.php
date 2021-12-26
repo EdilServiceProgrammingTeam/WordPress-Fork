@@ -23,15 +23,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					The three shipping classes estimate the products shipping cost based on total price ranges.
 					That\'s dedicated to the products which don\'t have the weight property.<br>
 					Here you can the ranges:
-					<style type="text/css">
-					.tg  {border-collapse:collapse;border-spacing:0;}
-					.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-					  overflow:hidden;padding:10px 5px;word-break:normal;}
-					.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-					  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-					.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
-					</style>
-					<table class="tg">
+					<table style="border: 1px solid;">
 					<thead>
 					  <tr>
 					    <th class="tg-c3ow">Range</th>

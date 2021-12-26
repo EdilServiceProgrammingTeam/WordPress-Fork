@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name: New shipping
+ * Plugin Name: Standard shipping
  * Description: spedizioni fatte bene
  */
 if ( ! defined( 'WPINC' ) ){
 	die('security by preventing any direct access to your plugin file');
 }
+function admin_theme_style() {
+	wp_enqueue_style('admin-theme', plugins_url('css/wp-admin.css', __FILE__));
+}
+add_action('admin_enqueue_scripts', 'admin_theme_style');
+add_action('login_enqueue_scripts', 'admin_theme_style');
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-	function admin_theme_style() {
-		wp_enqueue_style('easydigital_style', plugins_url('wp-admin.css', __FILE__));
-	}
-	add_action('admin_enqueue_scripts', 'theme_style');
-	add_action('login_enqueue_scripts', 'theme_style');
 	function new_shipping_method()
 	{
 		if (!class_exists('new_Shipping_Method')) {

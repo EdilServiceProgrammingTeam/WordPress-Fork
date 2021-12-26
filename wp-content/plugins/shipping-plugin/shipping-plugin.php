@@ -23,23 +23,68 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					The three shipping classes estimate the products shipping cost based on total price ranges.
 					That\'s dedicated to the products which don\'t have the weight property.<br>
 					Here you can the ranges:
-					+-----------+-----------+--------+-------+
-					|   Range   |   Light   | Medium | Heavy |
-					+-----------+-----------+--------+-------+
-					|   €0-25   |     €8    |   €10  |  €16  |
-					+-----------+-----------+--------+-------+
-					|   €25-45  |     €9    |   €12  |  €18  |
-					+-----------+-----------+--------+-------+
-					|  €45-100  |    €10    |   €15  |  €20  |
-					+-----------+-----------+--------+-------+
-					|  €100-200 |  €100-200 |   €17  |  €27  |
-					+-----------+-----------+--------+-------+
-					|  €200-500 |  €200-500 |   €25  |  €35  |
-					+-----------+-----------+--------+-------+
-					| €500-1000 | €500-1000 |   €25  |  €45  |
-					+-----------+-----------+--------+-------+
-					|   €1000+  |    €35    |   €45  |  €70  |
-					+-----------+-----------+--------+-------+', 'easydigital');
+					<style type="text/css">
+					.tg  {border-collapse:collapse;border-spacing:0;}
+					.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+					  overflow:hidden;padding:10px 5px;word-break:normal;}
+					.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+					  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+					.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+					</style>
+					<table class="tg">
+					<thead>
+					  <tr>
+					    <th class="tg-c3ow">Range</th>
+					    <th class="tg-c3ow">Light</th>
+					    <th class="tg-c3ow">Medium</th>
+					    <th class="tg-c3ow">Heavy</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr>
+					    <td class="tg-c3ow">€0-25</td>
+					    <td class="tg-c3ow">€8</td>
+					    <td class="tg-c3ow">€10</td>
+					    <td class="tg-c3ow">€16</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€25-45</td>
+					    <td class="tg-c3ow">€9</td>
+					    <td class="tg-c3ow">€12</td>
+					    <td class="tg-c3ow">€18</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€45-100</td>
+					    <td class="tg-c3ow">€10</td>
+					    <td class="tg-c3ow">€15</td>
+					    <td class="tg-c3ow">€20</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€100-200</td>
+					    <td class="tg-c3ow">€100-200</td>
+					    <td class="tg-c3ow">€17</td>
+					    <td class="tg-c3ow">€27</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€200-500</td>
+					    <td class="tg-c3ow">€200-500</td>
+					    <td class="tg-c3ow">€25</td>
+					    <td class="tg-c3ow">€35</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€500-1000</td>
+					    <td class="tg-c3ow">€500-1000</td>
+					    <td class="tg-c3ow">€25</td>
+					    <td class="tg-c3ow">€45</td>
+					  </tr>
+					  <tr>
+					    <td class="tg-c3ow">€1000+</td>
+					    <td class="tg-c3ow">€35</td>
+					    <td class="tg-c3ow">€45</td>
+					    <td class="tg-c3ow">€70</td>
+					  </tr>
+					</tbody>
+					</table>', 'easydigital');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
 					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easydigital' );

@@ -16,7 +16,30 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					$this->id = 'standard-shipping';
 					$this->method_title = __('Standard (tax excluded)', 'easydigital');
-					$this->method_description = __('The standard method for shipping', 'easydigital');
+					$this->method_description = __('This is the standard shipping method. 
+					It calculates the shipping cost based on the products that have a weight property.
+					The rest of the products are divided into three shipping classes: light, medium and heavy. 
+					The products without a shipping class will be considered as "light". <br>
+					The three shipping classes estimate the products shipping cost based on total price ranges.
+					That\'s dedicated to the products which don\'t have the weight property.<br>
+					Here you can the ranges:
+					+-----------+-----------+--------+-------+
+					|   Range   |   Light   | Medium | Heavy |
+					+-----------+-----------+--------+-------+
+					|   €0-25   |     €8    |   €10  |  €16  |
+					+-----------+-----------+--------+-------+
+					|   €25-45  |     €9    |   €12  |  €18  |
+					+-----------+-----------+--------+-------+
+					|  €45-100  |    €10    |   €15  |  €20  |
+					+-----------+-----------+--------+-------+
+					|  €100-200 |  €100-200 |   €17  |  €27  |
+					+-----------+-----------+--------+-------+
+					|  €200-500 |  €200-500 |   €25  |  €35  |
+					+-----------+-----------+--------+-------+
+					| €500-1000 | €500-1000 |   €25  |  €45  |
+					+-----------+-----------+--------+-------+
+					|   €1000+  |    €35    |   €45  |  €70  |
+					+-----------+-----------+--------+-------+', 'easydigital');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
 					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easydigital' );
@@ -72,7 +95,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'title'=>__('Multiplier per quantity (default set to 0.2)','easydigital'),
 							'description'=>__('Increments the shipping cost based on the total quantity of the
 							 products in cart after €200 is reached if the products are not lightweight.<br>
-							 final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','easydigital'),
+							 Final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','easydigital'),
 							'type'=>'text',
 							'default'=>'0.2'
 						)

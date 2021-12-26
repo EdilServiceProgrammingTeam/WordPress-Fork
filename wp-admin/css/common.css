@@ -6,7 +6,10 @@
 	position: relative;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
-
+.bordered-table {
+	border: 1px solid black;
+	text-align: center;
+}
 #wpcontent {
 	height: 100%;
 	padding-left: 20px;

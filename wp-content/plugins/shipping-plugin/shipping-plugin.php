@@ -7,6 +7,11 @@ if ( ! defined( 'WPINC' ) ){
 	die('security by preventing any direct access to your plugin file');
 }
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+	add_action('wp_enqueue_scripts', 'callback_for_setting_up_scripts');
+	function callback_for_setting_up_scripts() {
+		wp_register_style( 'easydigital', '/wp-admin/common.css' );
+		wp_enqueue_style( 'easydigital' );
+	}
 	function new_shipping_method()
 	{
 		if (!class_exists('new_Shipping_Method')) {
@@ -22,7 +27,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					The products without a shipping class will be considered as "light". <br>
 					The three shipping classes estimate the products shipping cost based on total price ranges.
 					That\'s dedicated to the products which don\'t have the weight property.<br>
-					Here you can the ranges:
+					Here you can see the ranges:
 					<table class="bordered-table">
 					<thead>
 					  <tr>

@@ -208,7 +208,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
 						$regular_price=$_product->get_regular_price();
-						$total_without_discount+=$regular_price;
+						$total_without_discount+=$regular_price*$values['quantity'];
 						if ($_product->get_weight() && !$_product->get_shipping_class()) {
 							$weight = $_product->get_weight() * $values['quantity'];
 							$cost+= $weight*floatval($this->settings['cost-per-kilo']);
@@ -255,7 +255,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' => var_dump($_product), //$this->title,
+						'label' =>$this->title,
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {

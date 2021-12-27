@@ -277,7 +277,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	add_filter('woocommerce_shipping_methods', 'add_new_shipping_method');
 	function validate_order($posted)
 	{
-		$country = WC()->session->get('customer')['shipping_country'];
+		$country = WC()->countries->countries[WC()->session->get('customer')['shipping_country']];
+
 		$allowed_countries = WC()->countries->get_allowed_countries();
 		if (in_array($country,$allowed_countries)) {
 			$message =__('The country you selected is not available, contact us for more information about shipping.','easydigital');

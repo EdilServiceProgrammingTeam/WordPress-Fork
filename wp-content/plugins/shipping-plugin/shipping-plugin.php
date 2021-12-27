@@ -30,9 +30,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						The products without a shipping class will be considered as "light". <br>
 						The three shipping classes estimate the products shipping cost based on total price ranges.
 						That\'s dedicated to the products which don\'t have the weight property.<br>
+						Feel free to change the values in the settings to what best fits you.
 						Here you can see the ranges:
 					</div>
-					<div>
+					<div style="margin-top: 5px;">
 						<table class="bordered-table">
 						<thead>
 						  <tr>
@@ -200,12 +201,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				public function calculate_shipping($package = array())
 				{
 					$cost = 0;
+					$is_free=false;
 					$total_without_discount = 0;
 					$shipping_class_light = [];
 					$shipping_class_medium = [];
 					$shipping_class_heavy = [];
 					$shipping_class_free =[];
-					$country = $package["destination"]["country"];
+					$shipping_class_custom =[];
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
 						$regular_price=$_product->get_regular_price();
@@ -229,6 +231,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 										break;
 									case 'free-shipping':
 										$shipping_class_free[]=$regular_price*$values['quantity'];
+									case 'custom-shipping':
+										if ($_product->meta_exists('custom-shipping-cost')) {
+											$cost+=floatval(get_post_meta( $_product->get_id(), 'custom-shipping-cost', true ));
+										}
+										else {
+											$shipping_class_heavy[] = $regular_price*$values['quantity'];
+										}
 								}
 							}
 							else {
@@ -248,7 +257,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					elseif ($shipping_class_light) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
-
 					}
 					elseif ($shipping_class_free) {
 						$this->add_rate(array(
@@ -256,6 +264,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'label' =>__('Free shipping','easydigital'),
 							'cost' => 0
 						));
+						$is_free=true;
 					}
 					else {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
@@ -263,11 +272,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($cost<floatval($this->settings['minimum-cost'])) {
 						$cost=$this->settings['minimum-cost'];
 					}
-					$this->add_rate(array(
-						'id' => $this->id,
-						'label' =>$this->title,
-						'cost' => $cost
-						));
+					if (!$is_free) {
+						$this->add_rate(array(
+							'id' => $this->id,
+							'label' =>$this->title,
+							'cost' => $cost
+							));
+					}
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',

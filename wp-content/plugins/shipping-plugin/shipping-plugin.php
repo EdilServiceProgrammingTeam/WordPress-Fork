@@ -255,7 +255,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' =>$this->title,
+						'label' =>$total_without_discount,//$this->title,
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {

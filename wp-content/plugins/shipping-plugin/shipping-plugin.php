@@ -207,7 +207,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$shipping_class_medium = [];
 					$shipping_class_heavy = [];
 					$shipping_class_free =[];
-					$shipping_class_custom =[];
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
 						$regular_price=$_product->get_regular_price();
@@ -231,6 +230,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 										break;
 									case 'free-shipping':
 										$shipping_class_free[]=$regular_price*$values['quantity'];
+										break;
 									case 'custom-shipping':
 										if ($_product->meta_exists('custom-shipping-cost')) {
 											$cost+=floatval(get_post_meta( $_product->get_id(), 'custom-shipping-cost', true ));
@@ -272,7 +272,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($cost<floatval($this->settings['minimum-cost'])) {
 						$cost=$this->settings['minimum-cost'];
 					}
-					if (!$is_free) {
+					if ($is_free===false) {
 						$this->add_rate(array(
 							'id' => $this->id,
 							'label' =>$this->title,

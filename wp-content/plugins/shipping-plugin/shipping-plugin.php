@@ -207,7 +207,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
 						$regular_price=$_product->get_regular_price();
-						$total_without_discount+=$regular_price;
+						$total_without_discount+=$regular_price*;
 						if ($_product->get_weight() && !$_product->get_shipping_class()) {
 							$weight = $_product->get_weight() * $values['quantity'];
 							$cost+= $weight*floatval($this->settings['cost-per-kilo']);
@@ -246,14 +246,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
 					else {
-						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
+						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
-//					if ($cost<floatval($this->settings['minimum-cost'])) {
-//						$cost=$this->settings['minimum-cost'];
-//					}
+					if ($cost<floatval($this->settings['minimum-cost'])) {
+						$cost=$this->settings['minimum-cost'];
+					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' => $this->title,
+						'label' => var_dump($_product), //$this->title,
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {
@@ -278,7 +278,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	function validate_order($posted)
 	{
 		$country = WC()->countries->countries[WC()->session->get('customer')['shipping_country']];
-
 		$allowed_countries = WC()->countries->get_allowed_countries();
 		if (!in_array($country,$allowed_countries)) {
 			$message =__('The country you selected is not available, contact us for more information about shipping.','easydigital');

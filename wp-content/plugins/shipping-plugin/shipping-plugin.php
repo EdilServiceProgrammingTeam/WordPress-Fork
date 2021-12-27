@@ -204,6 +204,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$shipping_class_light = [];
 					$shipping_class_medium = [];
 					$shipping_class_heavy = [];
+					$shipping_class_free =[];
 					$country = $package["destination"]["country"];
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
@@ -218,18 +219,20 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							if ($shipping_class) {
 								switch($shipping_class) {
 									case 'light':
-										$shipping_class_light[] = $regular_price;
+										$shipping_class_light[] = $regular_price*$values['quantity'];
 										break;
 									case 'medium':
-										$shipping_class_medium[] = $regular_price;
+										$shipping_class_medium[] = $regular_price*$values['quantity'];
 										break;
 									case 'heavy':
-										$shipping_class_heavy[] = $regular_price;
+										$shipping_class_heavy[] = $regular_price*$values['quantity'];
 										break;
+									case 'free-shipping':
+										$shipping_class_free[]=$regular_price*$values['quantity'];
 								}
 							}
 							else {
-								$shipping_class_medium[] = $regular_price;
+								$shipping_class_light[] = $regular_price;
 								break;
 							}
 						}
@@ -247,6 +250,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 
 					}
+					elseif ($shipping_class_free) {
+						$this->add_rate(array(
+							'id' =>'free-shipping',
+							'label' =>__('Free shipping','easydigital'),
+							'cost' => 0
+						));
+					}
 					else {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
@@ -255,7 +265,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					}
 					$this->add_rate(array(
 						'id' => $this->id,
-						'label' =>$total_without_discount,//$this->title,
+						'label' =>$this->title,
 						'cost' => $cost
 						));
 					if ($this->settings['enable-takeaway']==='yes') {

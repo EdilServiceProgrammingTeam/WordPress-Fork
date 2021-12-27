@@ -246,7 +246,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
 					else {
-						$cost=$this->apply_multiplier_per_quantity( $cost, $package, $total_without_discount );
+						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
 					}
 					if ($cost<floatval($this->settings['minimum-cost'])) {
 						$cost=$this->settings['minimum-cost'];
@@ -261,7 +261,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'id'    => 'take-away',
 							'label' => __( 'Take away ' . '<span class="take-away-info">'
 							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
-							'cost'  => intval( $this->settings['take-away-cost'] )
+							'cost'  => floatval( $this->settings['take-away-cost'] )
 						) );
 					}
 				}
@@ -286,6 +286,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				wc_add_notice($message, $messageType);
 			}
 		}
+		wc_add_notice($allowed_countries, 'error');
 
 
 	}

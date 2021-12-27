@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Standard shipping
- * Description: spedizioni fatte bene
+ * Description: The standard shipping method with preconfigured ranges and multipliers that will estimate the shipping cost
  */
 if ( ! defined( 'WPINC' ) ){
 	die('security by preventing any direct access to your plugin file');
@@ -245,7 +245,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					elseif ($shipping_class_light) {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
 					}
-					if ($cost<$this->settings['minimum-cost']) {
+					else {
+						$cost=$this->apply_multiplier_per_quantity( $cost, $package, $total_without_discount );
+					}
+					if ($cost<floatval($this->settings['minimum-cost'])) {
 						$cost=$this->settings['minimum-cost'];
 					}
 					$this->add_rate(array(

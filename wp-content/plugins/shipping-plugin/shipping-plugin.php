@@ -19,6 +19,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			{
 				public function __construct()
 				{
+					parent::__construct();
 					$this->id = 'standard-shipping';
 					$this->method_title = __('Standard (tax excluded)', 'easydigital');
 					$this->method_description = __('

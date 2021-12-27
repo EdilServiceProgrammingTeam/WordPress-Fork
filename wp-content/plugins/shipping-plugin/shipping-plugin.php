@@ -21,67 +21,72 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					$this->id = 'standard-shipping';
 					$this->method_title = __('Standard (tax excluded)', 'easydigital');
-					$this->method_description = __('This is the standard shipping method. 
-					It calculates the shipping cost based on the products that have a weight property.
-					The rest of the products are divided into three shipping classes: light, medium and heavy. 
-					The products without a shipping class will be considered as "light". <br>
-					The three shipping classes estimate the products shipping cost based on total price ranges.
-					That\'s dedicated to the products which don\'t have the weight property.<br>
-					Here you can see the ranges:
-					<table class="bordered-table">
-					<thead>
-					  <tr>
-					    <th class="bordered-table">Range</th>
-					    <th class="bordered-table">Light</th>
-					    <th class="bordered-table">Medium</th>
-					    <th class="bordered-table">Heavy</th>
-					  </tr>
-					</thead>
-					<tbody>
-					  <tr>
-					    <td class="bordered-table">€0-25</td>
-					    <td class="bordered-table">€8</td>
-					    <td class="bordered-table">€10</td>
-					    <td class="bordered-table">€16</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€25-45</td>
-					    <td class="bordered-table">€9</td>
-					    <td class="bordered-table">€12</td>
-					    <td class="bordered-table">€18</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€45-100</td>
-					    <td class="bordered-table">€10</td>
-					    <td class="bordered-table">€15</td>
-					    <td class="bordered-table">€20</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€100-200</td>
-					    <td class="bordered-table">€100-200</td>
-					    <td class="bordered-table">€17</td>
-					    <td class="bordered-table">€27</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€200-500</td>
-					    <td class="bordered-table">€200-500</td>
-					    <td class="bordered-table">€25</td>
-					    <td class="bordered-table">€35</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€500-1000</td>
-					    <td class="bordered-table">€500-1000</td>
-					    <td class="bordered-table">€25</td>
-					    <td class="bordered-table">€45</td>
-					  </tr>
-					  <tr>
-					    <td class="bordered-table">€1000+</td>
-					    <td class="bordered-table">€35</td>
-					    <td class="bordered-table">€45</td>
-					    <td class="bordered-table">€70</td>
-					  </tr>
-					</tbody>
-					</table>', 'easydigital');
+					$this->method_description = __('
+					<div>
+						This is the standard shipping method. 
+						It calculates the shipping cost based on the products that have a weight property.
+						The rest of the products are divided into three shipping classes: light, medium and heavy. 
+						The products without a shipping class will be considered as "light". <br>
+						The three shipping classes estimate the products shipping cost based on total price ranges.
+						That\'s dedicated to the products which don\'t have the weight property.<br>
+						Here you can see the ranges:
+					</div>
+					<div>
+						<table>
+						<thead>
+						  <tr>
+						    <th class="bordered-table">Range</th>
+						    <th class="bordered-table">Light</th>
+						    <th class="bordered-table">Medium</th>
+						    <th class="bordered-table">Heavy</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+						    <td class="bordered-table">€0-25</td>
+						    <td class="bordered-table">€8</td>
+						    <td class="bordered-table">€10</td>
+						    <td class="bordered-table">€16</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€25-45</td>
+						    <td class="bordered-table">€9</td>
+						    <td class="bordered-table">€12</td>
+						    <td class="bordered-table">€18</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€45-100</td>
+						    <td class="bordered-table">€10</td>
+						    <td class="bordered-table">€15</td>
+						    <td class="bordered-table">€20</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€100-200</td>
+						    <td class="bordered-table">€113</td>
+						    <td class="bordered-table">€17</td>
+						    <td class="bordered-table">€27</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€200-500</td>
+						    <td class="bordered-table">€15</td>
+						    <td class="bordered-table">€25</td>
+						    <td class="bordered-table">€35</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€500-1000</td>
+						    <td class="bordered-table">€23</td>
+						    <td class="bordered-table">€25</td>
+						    <td class="bordered-table">€45</td>
+						  </tr>
+						  <tr>
+						    <td class="bordered-table">€1000+</td>
+						    <td class="bordered-table">€35</td>
+						    <td class="bordered-table">€45</td>
+						    <td class="bordered-table">€70</td>
+						  </tr>
+						</tbody>
+						</table>
+					</div>', 'easydigital');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
 					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easydigital' );

@@ -248,9 +248,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					else {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'heavy');
 					}
-					if ($cost<floatval($this->settings['minimum-cost'])) {
-						$cost=$this->settings['minimum-cost'];
-					}
+//					if ($cost<floatval($this->settings['minimum-cost'])) {
+//						$cost=$this->settings['minimum-cost'];
+//					}
 					$this->add_rate(array(
 						'id' => $this->id,
 						'label' => $this->title,
@@ -280,15 +280,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 		$country = WC()->countries->countries[WC()->session->get('customer')['shipping_country']];
 
 		$allowed_countries = WC()->countries->get_allowed_countries();
-		if (in_array($country,$allowed_countries)) {
+		if (!in_array($country,$allowed_countries)) {
 			$message =__('The country you selected is not available, contact us for more information about shipping.','easydigital');
 			$messageType = "error";
 			if (!wc_has_notice($message, $messageType)) {
 				wc_add_notice($message, $messageType);
 			}
 		}
-		wc_add_notice(implode(',',$allowed_countries), 'error');
-		wc_add_notice('ciao'.$country, 'error');
 
 
 	}

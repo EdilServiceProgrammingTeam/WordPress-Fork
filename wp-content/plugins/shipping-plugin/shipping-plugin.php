@@ -287,6 +287,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 			}
 		}
 		wc_add_notice(implode(',',$allowed_countries), 'error');
+		wc_add_notice('ciao'.$country, 'error');
 
 
 	}

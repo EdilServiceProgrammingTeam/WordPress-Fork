@@ -32,7 +32,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						Here you can see the ranges:
 					</div>
 					<div>
-						<table>
+						<table class="bordered-table">
 						<thead>
 						  <tr>
 						    <th class="bordered-table">Range</th>

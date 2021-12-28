@@ -15,3 +15,4 @@ require_once __DIR__ . '/admin.php';
 //wp_dashboard_setup();
 
 wp_enqueue_script( 'dashboard' );
+echo 'you shouldn\'t be here';

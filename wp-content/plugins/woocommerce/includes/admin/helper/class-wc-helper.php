@@ -151,7 +151,7 @@ class WC_Helper {
 				'version'   => null,
 			);
 
-//			$subscription['update_url'] = admin_url( 'update-core.php' );
+			$subscription['update_url'] = admin_url( 'update-core.php' );
 
 			$local = wp_list_filter( array_merge( $woo_plugins, $woo_themes ), array( '_product_id' => $subscription['product_id'] ) );
 

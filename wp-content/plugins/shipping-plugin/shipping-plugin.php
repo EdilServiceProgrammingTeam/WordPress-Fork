@@ -2,6 +2,8 @@
 /**
  * Plugin Name: Standard shipping
  * Description: The standard shipping method with preconfigured ranges and multipliers that will estimate the shipping cost
+ * Text Domain: shipping-plugin
+ * Domain Path: /languages
  */
 if ( ! defined( 'WPINC' ) ){
 	die('security by preventing any direct access to your plugin file');
@@ -9,6 +11,10 @@ if ( ! defined( 'WPINC' ) ){
 function admin_theme_style() {
 	wp_enqueue_style('admin-theme', plugins_url('css/wp-admin.css', __FILE__));
 }
+function translations_init() {
+	load_plugin_textdomain( 'shipping-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action('init', 'translations_init');
 add_action('admin_enqueue_scripts', 'admin_theme_style');
 add_action('login_enqueue_scripts', 'admin_theme_style');
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -21,7 +27,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				{
 					parent::__construct();
 					$this->id = 'standard-shipping';
-					$this->method_title = __('Standard (tax excluded)', 'easydigital');
+					$this->method_title = __('Standard (tax excluded)', 'shipping-plugin');
 					$this->method_description = __('
 					<div>
 						This is the standard shipping method. 
@@ -88,10 +94,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						  </tr>
 						</tbody>
 						</table>
-					</div>', 'easydigital');
+					</div>', 'shipping-plugin');
 					$this->init();
 					$this->enabled = $this->settings['enabled'] ?? 'yes';
-					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'easydigital' );
+					$this->title = $this->settings['title'] ?? __( 'Standard (tax excluded)', 'shipping-plugin' );
 				}
 				/**
 				Load the settings API
@@ -102,18 +108,20 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->init_settings();
 					add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
 				}
+
 				function init_form_fields()
 				{
+					load_plugin_textdomain( 'shipping-plugin');
 					$this->form_fields = array(
 						'enabled' => array(
-							'title' => __('Enable','easydigital'),
+							'title' => __('Enable','shipping-plugin'),
 							'type' => 'checkbox',
 							'default' => 'yes'
 						),
 						'title' => array(
 							'title' => __('Title'),
 							'type' => 'text',
-							'default' => __('Standard (tax excluded)','easydigital')
+							'default' => __('Standard (tax excluded)','shipping-plugin')
 						),
 						'enable-takeaway' => array(
 							'title' => __('Enable takeaway'),
@@ -121,35 +129,37 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' =>'yes'
 						),
 						'take-away-cost' => array(
-							'title' => __('Takeaway cost (default set to 0','easydigital'),
+							'title' => __('Takeaway cost (default set to 0','shipping-plugin'),
 							'type'=>'text',
 							'default' =>'0'
 						),
 						'minimum-cost'=> array(
-							'title'=>__('Minimum Cost (default set to 0)','easydigital'),
+							'title'=>__('Minimum Cost (default set to 0)','shipping-plugin'),
 							'type'=>'text',
 							'default'=>'0'
 						),
 						'take-away-info'=> array(
-							'title'=>__('Take away info Cost (default set to "")','easydigital'),
+							'title'=>__('Take away info Cost (default set to "")','shipping-plugin'),
 							'type'=>'text',
 							'default'=>''
 						),
 						'cost-per-kilo'=> array(
-							'title'=>__('Cost per Kilo (default set to 0.4)','easydigital'),
+							'title'=>__('Cost per Kilo (default set to 0.4)','shipping-plugin'),
 							'type'=>'text',
 							'default'=>'0.4'
 						),
 						'multiplier-quantity'=> array(
-							'title'=>__('Multiplier per quantity (default set to 0.2)','easydigital'),
+							'title'=>__('Multiplier per quantity (default set to 0.2)','shipping-plugin'),
 							'description'=>__('Increments the shipping cost based on the total quantity of the
 							 products in cart after €200 is reached if the products are not lightweight.<br>
-							 Final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','easydigital'),
+							 Final shipping cost = calculated shipping cost * (1 + total quantity * multiplier)','shipping-plugin'),
 							'type'=>'text',
 							'default'=>'0.2'
 						)
 					);
 				}
+
+
 
 				function search_for_range(int $total_cost,array $shipping_costs) {
 					if ($total_cost<25) {
@@ -200,17 +210,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 				public function calculate_shipping($package = array())
 				{
+					load_plugin_textdomain( 'shipping-plugin');
 					$cost = 0;
-					$is_free=false;
+					$not_standard=false;
 					$total_without_discount = 0;
 					$shipping_class_light = [];
 					$shipping_class_medium = [];
 					$shipping_class_heavy = [];
 					$shipping_class_free =[];
+					$shipping_class_takeaway =[];
 					foreach ($package['contents'] as $item_id => $values) {
 						$_product = $values['data'];
 						$regular_price=$_product->get_regular_price();
-						$total_without_discount+=$regular_price*$values['quantity'];
+						if (!in_array($_product->get_shipping_class(),['freeshipping','takeaway-only'])) {
+							$total_without_discount+=$regular_price*$values['quantity'];
+						}
 						if ($_product->get_weight() && !$_product->get_shipping_class()) {
 							$weight = $_product->get_weight() * $values['quantity'];
 							$cost+= $weight*floatval($this->settings['cost-per-kilo']);
@@ -228,8 +242,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 									case 'heavy':
 										$shipping_class_heavy[] = $regular_price*$values['quantity'];
 										break;
-									case 'free-shipping':
+									case 'freeshipping':
 										$shipping_class_free[]=$regular_price*$values['quantity'];
+										break;
+									case 'takeaway-only':
+										$shipping_class_takeaway[]=$regular_price*$values['quantity'];
 										break;
 									case 'custom-shipping':
 										if ($_product->meta_exists('custom-shipping-cost')) {
@@ -261,10 +278,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					elseif ($shipping_class_free) {
 						$this->add_rate(array(
 							'id' =>'free-shipping',
-							'label' =>__('Free shipping','easydigital'),
+							'label' =>__('Spedizione gratuita','shipping-plugin'),
 							'cost' => 0
 						));
-						$is_free=true;
+						$not_standard=true;
+					}
+					elseif ($shipping_class_takeaway) {
+						$not_standard=true;
 					}
 					else {
 						$cost+=$this->apply_range_shipping_cost($total_without_discount,'light');
@@ -272,18 +292,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if ($cost<floatval($this->settings['minimum-cost'])) {
 						$cost=$this->settings['minimum-cost'];
 					}
-					if ($is_free===false) {
+					if ($not_standard===false) {
 						$this->add_rate(array(
 							'id' => $this->id,
-							'label' =>$this->title,
+							'label' =>__('Standard (IVA esclusa)', 'shipping-plugin'),
 							'cost' => $cost
 							));
 					}
 					if ($this->settings['enable-takeaway']==='yes') {
 						$this->add_rate( array(
 							'id'    => 'take-away',
-							'label' => __( 'Take away ' . '<span class="take-away-info">'
-							               . $this->settings['take-away-info'] . '</span>', 'easydigital' ),
+							'label' => __( 'Ritiro in sede ' . '<span class="take-away-info">'
+							               . $this->settings['take-away-info'] . '</span>', 'shipping-plugin' ),
 							'cost'  => floatval( $this->settings['take-away-cost'] )
 						) );
 					}
@@ -300,10 +320,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	add_filter('woocommerce_shipping_methods', 'add_new_shipping_method');
 	function validate_order($posted)
 	{
+		load_plugin_textdomain( 'shipping-plugin');
 		$country = WC()->countries->countries[WC()->session->get('customer')['shipping_country']];
 		$allowed_countries = WC()->countries->get_allowed_countries();
 		if (!in_array($country,$allowed_countries)) {
-			$message =__('The country you selected is not available, contact us for more information about shipping.','easydigital');
+			$message =__('Il paese che hai selezionato non è al momento disponibile. Contattaci per ulteriori informazioni sulle spedizioni.','shipping-plugin');
 			$messageType = "error";
 			if (!wc_has_notice($message, $messageType)) {
 				wc_add_notice($message, $messageType);

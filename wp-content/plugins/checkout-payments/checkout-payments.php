@@ -10,9 +10,9 @@
 if ( ! defined( 'WPINC' ) ){
 	die('security by preventing any direct access to your plugin file');
 }
-function admin_theme_style() {
-	wp_enqueue_style('admin-theme', plugins_url('css/wp-admin.css', __FILE__));
-}
+//function admin_theme_style() {
+//	wp_enqueue_style('admin-theme', plugins_url('css/wp-admin.css', __FILE__));
+//}
 
 /*
  * This action hook registers our PHP class as a WooCommerce payment gateway
